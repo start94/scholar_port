@@ -1,0 +1,29 @@
+
+services:
+  # Servizio per il Backend
+  backend:
+    build: ./scholar-port-backend  
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/scholarport
+      CLIENT_URL: http://localhost:3000
+    depends_on:
+      - mongo
+
+  # Servizio per il Frontend
+  frontend:
+    build: ./scholar-port-frontend 
+    ports:
+      - "3000:80"
+
+  # Servizio per il Database MongoDB
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
